@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Data URI Converter</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="description" content="" />
+  <link rel="stylesheet" href="reset.css" />
+  <link rel="icon" href="favicon.png">
+</head>
+<body>
+  <header>
+    <h1>Data URI Converter</h1>
+  </header>
+  <main>
+    <section class="input">
+      <div class="buttons-container input-buttons">
+        <button id="btn_Preview">Preview</button>
+        <button id="btn_convert">Convert</button>
+        <button id="btn_clear">Clear</button>
+      </div>
+      <textarea id="input_textarea" placeholder="Paste your HTML/URI here..." spellcheck="false"></textarea>
+    </section>
+    <section class="output">
+      <div class="buttons-container input-buttons">
+        <button id="btn_copy">Copy</button>
+      </div>
+      <textarea id="output_textarea" placeholder="Converted URI/HTML will appear here..." spellcheck="false"></textarea>
+    </section>
+    <section class="preview"></section>
+  </main>
+  <footer>
+    <small>© <script>document.write(new Date().getFullYear())</script> David Jarvis. All Rights Reserved.</small>
+  </footer>
+</body>
+</html>
