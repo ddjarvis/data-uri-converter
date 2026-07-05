@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <meta name="description" content="" />
   <link rel="stylesheet" href="reset.css" />
+  <link rel="stylesheet" href="style.css" />
   <link rel="icon" href="favicon.png">
 </head>
 <body>
@@ -16,14 +17,14 @@
     <section class="input">
       <div class="buttons-container input-buttons">
         <button id="btn_Preview">Preview</button>
-        <button id="btn_convert">Convert</button>
+        <button id="btn_convert" onclick="convert()">Convert</button>
         <button id="btn_clear">Clear</button>
       </div>
       <textarea id="input_textarea" placeholder="Paste your HTML/URI here..." spellcheck="false"></textarea>
     </section>
     <section class="output">
       <div class="buttons-container input-buttons">
-        <button id="btn_copy">Copy</button>
+        <button id="btn_copy" onclick="copy_fn()">Copy</button>
       </div>
       <textarea id="output_textarea" placeholder="Converted URI/HTML will appear here..." spellcheck="false"></textarea>
     </section>
@@ -32,5 +33,48 @@
   <footer>
     <small>© <script>document.write(new Date().getFullYear())</script> David Jarvis. All Rights Reserved.</small>
   </footer>
+  <script>
+    function htmlToDataURI(html) {
+      const base64 = btoa(unescape(encodeURIComponent(html)));
+      return `data:text/html;base64,${base64}`;
+    }
+    function convert() {
+      const input = document.getElementById('input_textarea').value;
+      const output = htmlToDataURI(input);
+      document.getElementById('output_textarea').value = output;
+    }
+    function copyText(text) {
+      if (navigator.clipboard && window.isSecureContext) {
+        // Modern API (requires HTTPS or localhost)
+        return navigator.clipboard.writeText(text)
+          .then(() => console.log("Copied to clipboard"))
+          .catch(err => console.error("Failed to copy:", err));
+      } else {
+        // Fallback for older browsers
+        const textarea = document.createElement("textarea");
+        textarea.value = text;
+        textarea.style.position = "fixed"; // Prevent scrolling to bottom
+        document.body.appendChild(textarea);
+        textarea.focus();
+        textarea.select();
+        try {
+          document.execCommand("copy");
+          console.log("Copied to clipboard (fallback)");
+        } catch (err) {
+          console.error("Fallback copy failed:", err);
+        }
+        document.body.removeChild(textarea);
+      }
+    }
+    function copy_fn() {
+      const output = document.getElementById('output_textarea').value;
+      if (output) {
+        copyText(output);
+      } else {
+        alert("Output is empty. Please convert something first.");
+      }
+    }
+
+  </script>
 </body>
 </html>
